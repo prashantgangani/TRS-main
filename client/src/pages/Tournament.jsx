@@ -47,6 +47,7 @@ const TournamentRulesPage = () => {
   const navigate = useNavigate();
   const [accepted, setAccepted] = useState(false);
   const [hasEntry, setHasEntry] = useState(false);
+  const isSuperAdmin = localStorage.getItem('trs_role') === 'superadmin';
 
   useEffect(() => {
     const memberRole = localStorage.getItem('trs_role');
@@ -141,11 +142,20 @@ const TournamentRulesPage = () => {
             </button>
 
             <div className="mt-6 flex gap-3">
+              {isSuperAdmin && (
+                <Link
+                  to="/tournament/vote"
+                  className="w-full rounded-xl border border-amber-300/40 bg-amber-300/10 px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.15em] text-amber-200 transition hover:border-amber-200 hover:bg-amber-300/20"
+                >
+                  View tournament cards
+                </Link>
+              )}
               <Link
                 to="/tournament/vote"
                 onClick={(event) => {
-                  const hasSession = Boolean(localStorage.getItem('token')) &&
-                    (localStorage.getItem('trs_role') === 'member' || localStorage.getItem('trs_tournament_member_role') === 'member');
+                  const role = localStorage.getItem('trs_role');
+                  const hasSession = role === 'superadmin' || (Boolean(localStorage.getItem('token')) &&
+                    (role === 'member' || localStorage.getItem('trs_tournament_member_role') === 'member'));
                   if (!hasSession) {
                     event.preventDefault();
                     navigate('/tournament/login?redirect=/tournament/vote');
@@ -477,6 +487,10 @@ const TournamentVotePage = () => {
     const role = localStorage.getItem('trs_role');
     const username = localStorage.getItem('trs_username');
     const hasMemberSession = role === 'member' || localStorage.getItem('trs_tournament_member_role') === 'member';
+
+    if (role === 'superadmin') {
+      return;
+    }
 
     if (!username || !localStorage.getItem('token') || !hasMemberSession) {
       navigate('/tournament/login?redirect=/tournament/vote');
