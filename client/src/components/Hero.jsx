@@ -8,11 +8,12 @@ import { useNavigate } from "react-router-dom";
 import {
     ArrowRight,
     CarFront,
-    GalleryHorizontal
+    GalleryHorizontal,
+    Radio
 } from "lucide-react";
 
 
-const Hero = ({ isAdmin }) => {
+const Hero = ({ isAdmin, showTournamentNotification = true }) => {
     const [heroData, setHeroData] = useState({
         tonightsMeetTitle: 'Weekly Venue',
         tonightsMeetLocation: 'Los Santos Custom',
@@ -146,6 +147,35 @@ const scrollToSection = (id) => {
             {/* subtle Vignette */}
             <div className="absolute inset-0 shadow-[inset_0_0_150px_rgba(0,0,0,0.9)] pointer-events-none -z-10"></div>
 
+            {showTournamentNotification && (
+                <motion.button
+                    type="button"
+                    onClick={() => navigate('/tournament')}
+                    initial={{ opacity: 0, y: -24, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ delay: 0.35, duration: 0.7, ease: 'easeOut' }}
+                    className="group absolute left-1/2 top-28 z-30 flex w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 items-center gap-4 overflow-hidden rounded-2xl border border-red-500/60 bg-gradient-to-br from-[#28070b] via-[#12080b] to-[#321006] px-4 py-4 text-left shadow-[0_0_45px_rgba(239,68,68,0.24)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-orange-300 hover:shadow-[0_0_65px_rgba(249,115,22,0.42)] sm:gap-5 sm:px-6 sm:py-5 lg:left-8 lg:w-[min(44vw,620px)] lg:max-w-none lg:translate-x-0"
+                >
+                    <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent bg-[length:200%_auto] animate-gradient-x" />
+                    <span className="absolute bottom-0 left-0 h-0.5 w-1/3 bg-gradient-to-r from-red-500 via-orange-400 to-red-500 bg-[length:200%_auto] animate-gradient-x transition-all duration-700 group-hover:w-full" />
+                    <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-red-400/50 bg-red-500/10 text-red-300 sm:h-14 sm:w-14">
+                        <Radio size={25} />
+                        <span className="absolute right-1 top-1 h-2.5 w-2.5 animate-ping rounded-full bg-orange-400" />
+                        <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-orange-400" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                        <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-orange-300">
+                            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-orange-400" /> Live event
+                        </span>
+                        <span className="mt-1 block text-xl font-black uppercase leading-tight text-white sm:text-3xl">Tournament is ongoing</span>
+                        <span className="mt-1 block text-xs font-medium text-white/55 sm:text-sm">Bring your best build. Join the competition now.</span>
+                    </span>
+                    <span className="flex shrink-0 items-center gap-2 rounded-lg bg-gradient-to-r from-red-500 via-orange-400 to-red-600 bg-[length:200%_auto] animate-gradient-x px-3 py-3 text-[10px] font-black uppercase tracking-[0.18em] text-white shadow-[0_0_20px_rgba(239,68,68,0.3)] transition-all group-hover:shadow-[0_0_28px_rgba(249,115,22,0.5)] sm:px-5 sm:text-xs">
+                        Join now <ArrowRight size={16} />
+                    </span>
+                </motion.button>
+            )}
+
 {/* Giant TRS Watermark */}
 <div
     className="
@@ -189,7 +219,7 @@ const scrollToSection = (id) => {
 
 
             {/* --- Left Side: Content --- */}
-            <div className="w-full lg:w-[45%] lg:min-h-[100svh] flex flex-col justify-center px-6 sm:px-12 lg:pl-16 xl:pl-24 pt-10 pb-16 lg:py-0 z-20 relative shrink-0">
+            <div className="w-full lg:w-[45%] lg:min-h-[100svh] flex flex-col justify-center px-6 sm:px-12 lg:pl-16 xl:pl-24 pt-10 pb-16 lg:py-0 lg:translate-y-16 z-20 relative shrink-0">
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
@@ -257,7 +287,6 @@ More than 120 hosted events.
 Built around creativity,
 presentation and community.
 </motion.p>
-
 
 <div
     className="

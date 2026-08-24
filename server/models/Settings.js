@@ -19,6 +19,7 @@ const settingsSchema = new mongoose.Schema(
     garageUpdateLimit: { type: Number, default: 3 },
     showTournamentVotes: { type: Boolean, default: false },
     tournamentEntryEnabled: { type: Boolean, default: true },
+    showTournamentNotification: { type: Boolean, default: true },
   },
   { timestamps: true },
 );

@@ -35,7 +35,8 @@
                 allowAdminCarArrange: true,
                 hideGarageCars: true,
                 showTournamentVotes: false,
-                tournamentEntryEnabled: true
+                tournamentEntryEnabled: true,
+                showTournamentNotification: true
             };
             const currentValue = Object.prototype.hasOwnProperty.call(settings, key) ? settings[key] : (defaultValues[key] !== undefined ? defaultValues[key] : true);
             const newSettings = { ...settings, [key]: !currentValue };
@@ -72,7 +73,8 @@
             { key: 'memberLoginEnabled', name: 'Member Login' },
             { key: 'allowAdminCarArrange', name: 'Admin Arrange Garage Cars' },
             { key: 'hideGarageCars', name: 'Admin Hide Garage Cars' },
-            { key: 'tournamentEntryEnabled', name: 'Tournament Participation' }
+            { key: 'tournamentEntryEnabled', name: 'Tournament Participation' },
+            { key: 'showTournamentNotification', name: 'Home Tournament Notification' }
         ];
 
         const enabledCount = features.filter((feature) => {
@@ -159,7 +161,7 @@ const disabledCount = features.length - enabledCount;
 
                     <div className="space-y-4">
                         {features.map((feature, i) => {
-                            const defaultValues = { memberLoginEnabled: false, allowAdminCarArrange: true, hideGarageCars: true, showTournamentVotes: false, tournamentEntryEnabled: true };
+                            const defaultValues = { memberLoginEnabled: false, allowAdminCarArrange: true, hideGarageCars: true, showTournamentVotes: false, tournamentEntryEnabled: true, showTournamentNotification: true };
                             const isEnabled = Object.prototype.hasOwnProperty.call(settings, feature.key) 
                                 ? settings[feature.key]
                                 : (defaultValues[feature.key] !== undefined ? defaultValues[feature.key] : true);
